@@ -153,7 +153,7 @@ class RecipeDetailView {
       DOMElements.recipe.insertAdjacentHTML("beforeend", recipeDirectionsHtml);
     }
 
-    renderRecipe(recipe) {
+    renderRecipe(recipe, isBookmarked) {
       // render the recipe figure
       this.renderRecipeFigure(recipe.title, recipe.imageUrl)
       // render the recipe details
@@ -162,6 +162,8 @@ class RecipeDetailView {
       this.renderRecipeIngredients(recipe.ingredients)      
       // render the recipe directions
       this.renderRecipeDirections(recipe.publisher, recipe.sourceUrl);
+
+      if (isBookmarked) this.addBookmarkHighlight();
     }
 
     getUseElement() {

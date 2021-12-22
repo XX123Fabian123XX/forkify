@@ -28,17 +28,19 @@ class RecipeStorage {
     constructor({recipesSidebar, recipeDetail, recipesBookmark}) {
         this.recipesSidebar = recipesSidebar;
         this.recipeDetail = recipeDetail;
-        this.recipesBookmark = recipesBookmark;
+        this.recipesBookmark = recipesBookmark ?? [];
     }
 
     isRecipeInBookmarksList(recipe) {
+        if (!this.recipesBookmark) return false;
         const result =  this.recipesBookmark.find(rec => rec.id === recipe.id) ? true : false;
         console.log(`Das Ergebnis ist ${result}`);
         return result;
     }
 
     removeFromBookmarksList(recipe) {
-        console.log("removing from recipe list")
+        const index = this.recipesBookmark.findIndex(rec => rec.id === recipe.id);
+        this.recipesBookmark.splice(index,1)
     }
 }
 // get the recipeData
@@ -150,7 +152,6 @@ class RecipeModel {
     }
 
     removeRecipeFromBookmarksList(recipe) {
-        console.log("removing item")
         this.recipeStorage.removeFromBookmarksList(recipe);
         this.recipeLocalStorage.storeDataInLocalStorage({
             recipesBookmarks:this.getRecipeBookmark()

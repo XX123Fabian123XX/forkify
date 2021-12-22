@@ -73,8 +73,14 @@ const setupSidebarListener = () => {
     // remove the loader 
     recipeDetailView.removeLoader();
 
+
+    // if the recipe detail is in the bookmarks list highlight it
+    const isRecipeBookmarked = recipeModel.isRecipeInBookmarksList(recipeDetail);
+    
+
     // render new recipe
-    recipeDetailView.renderRecipe(recipeDetail)
+    recipeDetailView.renderRecipe(recipeDetail, isRecipeBookmarked)
+
   })
    
 
@@ -116,9 +122,9 @@ const setupRecipeDetailListener = () => {
        if (recipeModel.isRecipeInBookmarksList(recipeModel.getRecipeDetail())) {
           console.log("recipe list is in bookmarks")
     //     // remove recipe from recipe list
-    //     recipeModel.removeRecipeFromBookmarksList(recipeModel.getRecipeDetail());
+        recipeModel.removeRecipeFromBookmarksList(recipeModel.getRecipeDetail());
     //     // remove highlight
-    //     recipeDetailView.removeBookmarkHighlight();
+        recipeDetailView.removeBookmarkHighlight();
         return
       }
 
@@ -139,7 +145,7 @@ const renderRecipesFromLocalStorage = () => {
   const recipes = recipeModel.getRecipesSidebar();
   const recipeDetail = recipeModel.getRecipeDetail();
 
-  if (recipes.length > 0) {
+  if (recipes && recipes.length > 0) {
     sidebarView.renderInitialPage(recipes)
   }
   console.log(recipeDetail)
